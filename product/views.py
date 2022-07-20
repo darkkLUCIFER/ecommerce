@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import Http404
 from .models import Product
 from django.views.generic import ListView
 
@@ -10,6 +11,10 @@ class ProudctListView(ListView):
     context_object_name = 'products'
     paginate_by = 1
 
-# def product_list(request):
-#     products = Product.objects.all()
-#     return render(request, 'product/products_list.html', {'products': products})
+
+def product_detail_view(request, pk):
+    try:
+        product = Product.objects.get(active=True, id=pk)
+    except Product.DoesNotExist:
+        return render(request, 'partials/404.html')
+    return render(request, 'product/product_detail.html', {'product': product})
