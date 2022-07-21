@@ -30,5 +30,5 @@ class SearchProductView(ListView):
         request = self.request
         query = request.GET.get('q')
         if query:
-            return Product.objects.filter(active=True, title__icontains=query)
+            return Product.objects.search(query)
         return Product.objects.filter(active=True)
