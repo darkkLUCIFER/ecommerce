@@ -20,11 +20,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('ecommerce/', include('ecommerce.urls', namespace='ecommerce')),
-    path('account/', include('account.urls', namespace='account')),
-    path('product/', include('product.urls', namespace='product')),
-    path('tag/',include('product_tag.urls', namespace='product_tag')),
-
-
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  path('admin/', admin.site.urls),
+                  path('ecommerce/', include('ecommerce.urls', namespace='ecommerce')),
+                  path('account/', include('account.urls', namespace='account')),
+                  path('product/', include('product.urls', namespace='product')),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

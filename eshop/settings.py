@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'product.apps.ProductConfig',
     'product_tag.apps.ProductTagConfig',
+    'product_category.apps.ProductCategoryConfig',
+
 
     # 3rd party
     'django_render_partial',
