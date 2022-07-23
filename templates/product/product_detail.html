@@ -53,10 +53,15 @@
                                 <div>
                                     <h2>{{ product.title }}</h2>
                                     <p>شناسـه : {{ product.id }}</p>
+                                    <spna>تگ ها:</spna>
+                                    {% for tag in product.tag_set.all %}
+                                        <p>#{{ tag }}</p>
+                                    {% endfor %}
+
                                 </div>
                                 <div>
 									<span>
-										<span>قیمت : {{ product.price}}تومان </span>
+										<span>قیمت : {{ product.price }}تومان </span>
 									</span>
                                     <span>
 										<label>تعداد :</label>
