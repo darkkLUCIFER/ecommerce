@@ -27,3 +27,17 @@ class Product(models.Model):
         db_table = 'products'
         verbose_name = 'محصول'
         verbose_name_plural = 'محصولات'
+
+
+class ProductGallery(models.Model):
+    title = models.CharField(max_length=120, verbose_name='عنوان')
+    image = models.ImageField(upload_to='gallery/', verbose_name='تصویر')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_image', verbose_name='محصول')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        db_table = 'galleries'
+        verbose_name = 'تصویر'
+        verbose_name_plural = 'تصویر ها'

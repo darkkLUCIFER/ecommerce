@@ -1,6 +1,8 @@
+import itertools
+
 from django.shortcuts import render, redirect
 from django.http import Http404
-from .models import Product
+from .models import Product, ProductGallery
 from django.views.generic import ListView, TemplateView
 from product_category.models import ProductCategory
 
@@ -27,12 +29,19 @@ class ProductListByCategory(ListView):
         return Product.objects.filter(active=True).filter(categories__title__iexact=category)
 
 
+def my_grouper(n, iterable):
+    args = [iter(iterable)] * n
+    return ([e for e in t if e is not None] for t in itertools.zip_longest(*args))
+
+
 def product_detail_view(request, pk):
+    galleries = ProductGallery.objects.filter(product_id=pk)
+    grouped_galleries = list(my_grouper(3, galleries))
     try:
         product = Product.objects.get(active=True, id=pk)
     except Product.DoesNotExist:
         return render(request, 'partials/404.html')
-    return render(request, 'product/product_detail.html', {'product': product})
+    return render(request, 'product/product_detail.html', {'product': product, 'grouped_galleries': grouped_galleries})
 
 
 class SearchProductView(ListView):
