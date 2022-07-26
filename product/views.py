@@ -12,7 +12,7 @@ class ProudctListView(ListView):
     template_name = 'product/products_list.html'
     queryset = Product.objects.filter(active=True)
     context_object_name = 'products'
-    paginate_by = 1
+    paginate_by = 6
 
 
 class ProductListByCategory(ListView):
@@ -37,11 +37,15 @@ def my_grouper(n, iterable):
 def product_detail_view(request, pk):
     galleries = ProductGallery.objects.filter(product_id=pk)
     grouped_galleries = list(my_grouper(3, galleries))
+
     try:
         product = Product.objects.get(active=True, id=pk)
     except Product.DoesNotExist:
         return render(request, 'partials/404.html')
-    return render(request, 'product/product_detail.html', {'product': product, 'grouped_galleries': grouped_galleries})
+    related_products = Product.objects.filter(categories__product=product).distinct()
+    grouped_related_products = my_grouper(3, related_products)
+    return render(request, 'product/product_detail.html', {'product': product, 'grouped_galleries': grouped_galleries,
+                                                           'grouped_related_products': grouped_related_products})
 
 
 class SearchProductView(ListView):
