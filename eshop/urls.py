@@ -24,4 +24,5 @@ urlpatterns = [
                   path('ecommerce/', include('ecommerce.urls', namespace='ecommerce')),
                   path('account/', include('account.urls', namespace='account')),
                   path('product/', include('product.urls', namespace='product')),
+                  path('contact_us/', include('contact_us.urls', namespace='contact_us')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
