@@ -1,5 +1,5 @@
 {% load static %}
-{#{% load render_partial %}#}
+{% load render_partial %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,11 +14,9 @@
 </head>
 <body>
 {% include 'partials/messages.html' %}
-{#{% render_partial 'header' %}#}
-{% include 'shared/Header.html' %}
+{% render_partial 'header' %}
 {% block content %}{% endblock %}
-{#{% render_partial 'footer' %}#}
-{% include 'shared/Footer.html' %}
+{% render_partial 'footer' %}
 {% include 'shared/_FooterReferences.html' %}
 {% block Footer %}{% endblock %}
 </body>

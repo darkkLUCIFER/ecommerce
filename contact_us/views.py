@@ -1,10 +1,13 @@
 from django.contrib import messages
 from django.shortcuts import render
+
+from eshop_setting.models import SiteSetting
 from .forms import ContactUsForm
 from .models import ContactUs
 
 
 def contact_us_view(request):
+    setting = SiteSetting.objects.first()
     if request.method == "POST":
         form = ContactUsForm(data=request.POST)
         if form.is_valid():
@@ -20,4 +23,4 @@ def contact_us_view(request):
             messages.warning(request, 'مشکلی در ارسال پیغام شما بوجود آمده است!!!', extra_tags='warning')
     else:
         form = ContactUsForm()
-    return render(request, 'contact_us/contact.html', {'form': form})
+    return render(request, 'contact_us/contact.html', {'form': form, 'setting': setting})

@@ -7,7 +7,7 @@ from django.views.generic import ListView, TemplateView
 from product_category.models import ProductCategory
 
 
-class ProudctListView(ListView):
+class ProductListView(ListView):
     model = Product
     template_name = 'product/products_list.html'
     queryset = Product.objects.filter(active=True)
