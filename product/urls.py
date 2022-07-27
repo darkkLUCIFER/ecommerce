@@ -9,7 +9,7 @@ urlpatterns = [
     path('category/<str:category_name>/', ProductListByCategory.as_view(), name='product_list_by_category'),
     path('detail/<int:pk>/', product_detail_view, name='product_detail'),
     path('search/', SearchProductView.as_view(), name='product_search'),
-    path('product_category/', product_categories, name='product_category'),
+
     path('error/404/', Error404View.as_view(), name='error_404'),
 
 

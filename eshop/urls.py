@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from ecommerce.views import footer_view, header_view
+from product.views import product_categories
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
@@ -28,4 +29,5 @@ urlpatterns = [
                   path('contact_us/', include('contact_us.urls', namespace='contact_us')),
                   path('footer/', footer_view, name='footer'),
                   path('header/', header_view, name='header'),
+                  path('product_category/', product_categories, name='product_category'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
