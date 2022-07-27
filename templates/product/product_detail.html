@@ -1,5 +1,6 @@
 {% extends 'shared/_MainLayout.html' %}
 {% load static %}
+{% load render_partial %}
 
 {% block content %}
     <section>
@@ -304,7 +305,7 @@
 
                 <div class="col-sm-3">
                     <div class="left-sidebar">
-                        {% include 'product/product_category.html' %}
+                        {% render_partial 'product_category' %}
                         <div class="shipping text-center">
                             <!--shipping-->
                             <img src="{% static 'images/home/shipping.jpg' %}" alt="">
