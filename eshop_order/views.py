@@ -23,6 +23,6 @@ def add_user_order(request):
 
             order.orderdetail_set.create(product_id=product.id, price=product.price, count=count)
             # todo : redirect user to user panel
-            # return redirect('product:product_detail')
+            return redirect(f'/product/detail/{product.id}')
 
     return redirect('ecommerce:home_page')
