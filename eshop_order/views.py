@@ -16,13 +16,13 @@ def add_user_order(request):
             count = cd['count']
             if count < 0:
                 count = 1
-            product = Product.objects.get(product_id=product_id)
+            product = Product.objects.get(id=product_id)
             order = Order.objects.filter(owner_id=request.user.id, is_paid=False).first()
             if order is None:
                 order = Order.objects.create(owner_id=request.user.id, is_paid=False)
 
             order.orderdetail_set.create(product_id=product.id, price=product.price, count=count)
             # todo : redirect user to user panel
-            return redirect(f'product:product_detail/{product.id}')
+            # return redirect('product:product_detail')
 
     return redirect('ecommerce:home_page')
