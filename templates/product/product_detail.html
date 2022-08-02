@@ -60,12 +60,33 @@
 										<span>قیمت : {{ product.price }}تومان </span>
 									</span>
                                     <span>
-										<label>تعداد :</label>
-										<input type="text" value="3" class="search_box">
-										<button type="button" class="btn btn-fefault cart">
-											<i class="fa fa-shopping-cart"></i>
-											افـزودن به سبـد خریـد
-										</button>
+										<form action="{% url 'eshop_order:add_user_order' %}" method="post">
+                                            {% csrf_token %}
+                                            <p style="color: red;size: 40px">رفع مشکل دریافت آیدی محصول برای ارسال به فرم و اضافه شدن محصول به سبد خرید p53</p>
+                                            {{form.product_id}}
+                                            <label for="count">تعداد :</label>
+										    <input type="number" class="search_box" id="count" required
+                                                   name="count"
+                                                   min="1">
+										    <button type="submit" class="btn btn-fefault cart">
+											    <i class="fa fa-shopping-cart"></i>
+											    افـزودن به سبـد خریـد
+										    </button>
+                                        </form>
+                                        {% if form.errors %}
+                                            <p>لطفا خطا های زیر را رفع کنید:</p>
+                                            {% for field in form %}
+                                                {% if field.errors %}
+                                                    {% for error in field.errors %}
+                                                        {{ field.label }} : {{ error }}
+                                                        <br>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if form.non_field_errors %}
+                                                {{ form.non_field_errors }}
+                                            {% endif %}
+                                        {% endif %}
 									</span>
                                 </div>
                                 <div>

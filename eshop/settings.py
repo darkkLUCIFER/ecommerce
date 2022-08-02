@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'eshop_slider.apps.EshopSliderConfig',
     'contact_us.apps.ContactUsConfig',
     'eshop_setting.apps.EshopSettingConfig',
+    'eshop_order.apps.EshopOrderConfig',
 
     # 3rd party
     'django_render_partial',

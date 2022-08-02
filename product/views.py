@@ -2,6 +2,8 @@ import itertools
 
 from django.shortcuts import render, redirect
 from django.http import Http404
+
+from eshop_order.forms import UserNewOrderForm
 from .models import Product, ProductGallery
 from django.views.generic import ListView, TemplateView
 from product_category.models import ProductCategory
@@ -34,7 +36,10 @@ def my_grouper(n, iterable):
     return ([e for e in t if e is not None] for t in itertools.zip_longest(*args))
 
 
-def product_detail_view(request, pk):
+def product_detail_view(request, **kwargs):
+    pk = kwargs['pk']
+    form = UserNewOrderForm(data=request.POST, initial={'product_id': pk})
+    print('okkk')
     galleries = ProductGallery.objects.filter(product_id=pk)
     grouped_galleries = list(my_grouper(3, galleries))
 
@@ -45,7 +50,8 @@ def product_detail_view(request, pk):
     related_products = Product.objects.filter(categories__product=product).distinct()
     grouped_related_products = my_grouper(3, related_products)
     return render(request, 'product/product_detail.html', {'product': product, 'grouped_galleries': grouped_galleries,
-                                                           'grouped_related_products': grouped_related_products})
+                                                           'grouped_related_products': grouped_related_products,
+                                                           'form': form})
 
 
 class SearchProductView(ListView):

@@ -30,4 +30,6 @@ urlpatterns = [
                   path('footer/', footer_view, name='footer'),
                   path('header/', header_view, name='header'),
                   path('product_category/', product_categories, name='product_category'),
+                  path('order/', include('eshop_order.urls', namespace='eshop_order')),
+
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
