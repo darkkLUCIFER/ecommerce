@@ -9,7 +9,8 @@ def home_page_view(request):
 
 
 def header_view(request):
-    context = {}
+    site_settings = SiteSetting.objects.first()
+    context = {'site_settings':site_settings}
     return render(request, 'shared/Header.html', context)
 
 
@@ -17,3 +18,9 @@ def footer_view(request):
     site_setting = SiteSetting.objects.first()
     context = {'site_setting': site_setting}
     return render(request, 'shared/Footer.html', context)
+
+
+def about_page(request):
+    site_settings = SiteSetting.objects.first()
+    context = {'site_settings': site_settings}
+    return render(request, 'about_us/about_page.html', context)

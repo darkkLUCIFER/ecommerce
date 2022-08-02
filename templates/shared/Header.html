@@ -44,8 +44,9 @@
 
                 <div class="col-sm-4" style="text-align: left;">
                     <div class="logo">
-                        <a href="index.html"><img src="{% static 'images/home/logo.png' %}" alt="Logo"
-                                                  style="text-align: center;"/></a>
+                        <a href="{% url 'ecommerce:home_page' %}"><img src="{{ site_settings.logo_image.url }}"
+                                                                       alt="Logo"
+                                                                       style="text-align: center;"/></a>
                     </div>
                 </div>
 
@@ -96,7 +97,7 @@
                                     <li><a href="blog-single.html">صفحـه خبـر</a></li>
                                 </ul>
                             </li>
-                            <li><a href="About.html">درباره مـا</a></li>
+                            <li><a href="{% url 'ecommerce:about_page' %}">درباره مـا</a></li>
                             <li><a href="{% url 'contact_us:contact_us' %}">تماس با مـا</a></li>
                         </ul>
                     </div>

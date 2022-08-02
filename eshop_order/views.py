@@ -6,7 +6,7 @@ from .forms import UserNewOrderForm
 from .models import OrderDetail, Order
 
 
-@login_required
+@login_required(login_url='/login')
 def add_user_order(request):
     if request.method == "POST":
         form = UserNewOrderForm(data=request.POST)

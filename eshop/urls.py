@@ -22,14 +22,18 @@ from ecommerce.views import footer_view, header_view
 from product.views import product_categories
 
 urlpatterns = [
-                  path('admin/', admin.site.urls),
-                  path('ecommerce/', include('ecommerce.urls', namespace='ecommerce')),
-                  path('account/', include('account.urls', namespace='account')),
-                  path('product/', include('product.urls', namespace='product')),
-                  path('contact_us/', include('contact_us.urls', namespace='contact_us')),
-                  path('footer/', footer_view, name='footer'),
-                  path('header/', header_view, name='header'),
-                  path('product_category/', product_categories, name='product_category'),
-                  path('order/', include('eshop_order.urls', namespace='eshop_order')),
+    path('admin/', admin.site.urls),
+    path('ecommerce/', include('ecommerce.urls', namespace='ecommerce')),
+    path('account/', include('account.urls', namespace='account')),
+    path('product/', include('product.urls', namespace='product')),
+    path('contact_us/', include('contact_us.urls', namespace='contact_us')),
+    path('footer/', footer_view, name='footer'),
+    path('header/', header_view, name='header'),
+    path('product_category/', product_categories, name='product_category'),
+    path('order/', include('eshop_order.urls', namespace='eshop_order')),
 
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+if settings.DEBUG:
+    # add root media files
+    urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

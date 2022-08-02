@@ -10,6 +10,7 @@ class SiteSetting(models.Model):
     email_address = models.EmailField(max_length=50, verbose_name='ایمیل')
     about_us = models.TextField(verbose_name='درباره ما')
     copy_right = models.CharField(max_length=200, verbose_name='متن کپی رایت')
+    logo_image = models.ImageField(verbose_name='تصویر لوگو', upload_to='settings/', null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

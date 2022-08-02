@@ -39,7 +39,6 @@ def my_grouper(n, iterable):
 def product_detail_view(request, **kwargs):
     pk = kwargs['pk']
     form = UserNewOrderForm(data=request.POST, initial={'product_id': pk})
-    print('okkk')
     galleries = ProductGallery.objects.filter(product_id=pk)
     grouped_galleries = list(my_grouper(3, galleries))
 
