@@ -12,6 +12,12 @@ class Order(models.Model):
     def __str__(self):
         return self.owner.get_full_name()
 
+    def get_total_price(self):
+        amount = 0
+        for detail in self.orderdetail_set.all():
+            amount += detail.price * detail.count
+        return amount
+
     class Meta:
         db_table = 'orders'
         verbose_name = 'سبد خرید'

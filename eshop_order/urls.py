@@ -8,6 +8,6 @@ urlpatterns = [
     path('add_user_order/', add_user_order, name='add_user_order'),
     path('user_open_order/', user_open_order, name='user_open_order'),
     path('request/', send_request, name='request'),
-    path('verify/', verify, name='verify'),
+    path('verify/<int:order_id>/', verify, name='verify'),
 
 ]

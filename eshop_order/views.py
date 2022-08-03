@@ -1,3 +1,5 @@
+import time
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
@@ -5,7 +7,7 @@ from product.models import Product
 from .forms import UserNewOrderForm
 from .models import OrderDetail, Order
 
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from zeep import Client
 
 
@@ -35,13 +37,15 @@ def add_user_order(request):
 def user_open_order(request):
     context = {
         'order': None,
-        'detail': None
+        'detail': None,
+        'total': 0
     }
     open_order = Order.objects.filter(owner_id=request.user.id, is_paid=False).first()
     open_order_detail = open_order.orderdetail_set.all()
     if open_order is not None:
         context['order'] = open_order
         context['detail'] = open_order_detail
+        context['total'] = open_order.get_total_price()
 
     return render(request, 'order/user_open_order.html', context)
 
@@ -53,21 +57,32 @@ email = 'email@example.com'  # Optional
 mobile = '09123456789'  # Optional
 
 client = Client('https://www.zarinpal.com/pg/services/WebGate/wsdl')
-CallbackURL = 'http://localhost:8000/verify/'  # Important: need to edit for realy server.
+CallbackURL = 'http://localhost:8000/verify'  # Important: need to edit for really server.
 
 
 def send_request(request):
-    result = client.service.PaymentRequest(MERCHANT, amount, description, email, mobile, CallbackURL)
-    if result.Status == 100:
-        return redirect('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority))
-    else:
-        return HttpResponse('Error code: ' + str(result.Status))
+    total_price = 0
+    open_order = Order.objects.filter(owner_id=request.user.id, is_paid=False).first()
+    if open_order is not None:
+        total_price = open_order.get_total_price()
+        result = client.service.PaymentRequest(MERCHANT, total_price, description, email, mobile,
+                                               f'{CallbackURL}/{open_order.id}')
+        if result.Status == 100:
+            return redirect('https://www.zarinpal.com/pg/StartPay/' + str(result.Authority))
+        else:
+            return HttpResponse('Error code: ' + str(result.Status))
+    raise Http404()
 
 
-def verify(request):
+def verify(request, *args, **kwargs):
+    order_id = kwargs['order_id']
     if request.GET.get('Status') == 'OK':
         result = client.service.PaymentVerification(MERCHANT, request.GET['Authority'], amount)
         if result.Status == 100:
+            user_order = Order.objects.get_queryset().get(id=order_id)
+            user_order.is_paid = True
+            user_order.payment_date = time.time()
+            user_order.save()
             return HttpResponse('Transaction success.\nRefID: ' + str(result.RefID))
         elif result.Status == 101:
             return HttpResponse('Transaction submitted : ' + str(result.Status))
