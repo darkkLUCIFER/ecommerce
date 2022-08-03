@@ -26,3 +26,18 @@ def add_user_order(request):
             return redirect(f'/product/detail/{product.id}')
 
     return redirect('ecommerce:home_page')
+
+
+@login_required(login_url='/login')
+def user_open_order(request):
+    context = {
+        'order': None,
+        'detail': None
+    }
+    open_order = Order.objects.filter(owner_id=request.user.id, is_paid=False).first()
+    open_order_detail = open_order.orderdetail_set.all()
+    if open_order is not None:
+        context['order'] = open_order
+        context['detail'] = open_order_detail
+
+    return render(request, 'order/user_open_order.html', context)
