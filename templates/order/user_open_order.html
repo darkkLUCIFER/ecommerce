@@ -27,7 +27,7 @@
                         {% for product in detail %}
                             <tr>
                                 <td class="cart_product">
-                                    <a href=""><img src="{{ product.product.image.url }}" alt=""></a>
+                                    <a href=""><img src="{{ product.product.image.url }}" width="110px" height="110px"></a>
                                 </td>
                                 <td class="cart_description">
                                     <h4><a href="">{{ product.product.title }}</a></h4>
@@ -42,10 +42,10 @@
                                     </div>
                                 </td>
                                 <td class="cart_total">
-                                    <p class="cart_total_price">{{ product.get_detail_sum }} ريال</p>
+                                    <p class="cart_total_price">{{ product.get_detail_sum }} تومان</p>
                                 </td>
                                 <td class="cart_delete">
-                                    <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                                    <a class="cart_quantity_delete" href="{% url 'eshop_order:remove_order_detail' order.id %}"><i class="fa fa-times"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -74,12 +74,12 @@
                 <div class="col-sm-6">
                     <div class="total_area">
                         <ul>
-                            <li>مجمـوع سبد خرید <span>{{ total}} تومان</span></li>
+                            <li>مجمـوع سبد خرید <span>{{ total }} تومان</span></li>
                             <li>هزینـه حمل و نقـل <span>رایـگان</span></li>
-                            <li>مجمـوع <span>{{ total}} تومان</span></li>
+                            <li>مجمـوع <span>{{ total }} تومان</span></li>
                         </ul>
                         <a class="btn btn-default update" href="shop.html">به روز رسانی سبـد خریـد </a>
-                        <a class="btn btn-default check_out" href="checkout.html">پرداخت</a>
+                        <a class="btn btn-default check_out" href="{% url 'eshop_order:request' %}">پرداخت</a>
                     </div>
                 </div>
             </div>

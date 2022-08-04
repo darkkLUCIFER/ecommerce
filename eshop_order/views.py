@@ -34,7 +34,7 @@ def add_user_order(request):
 
 
 @login_required(login_url='/login')
-def user_open_order(request):
+def user_open_order(request, *args, **kwargs):
     context = {
         'order': None,
         'detail': None,
@@ -48,6 +48,28 @@ def user_open_order(request):
         context['total'] = open_order.get_total_price()
 
     return render(request, 'order/user_open_order.html', context)
+
+
+@login_required(login_url='/login')
+def remove_order_detail(request, *args, **kwargs):
+    detail_id = kwargs.get('detail_id')
+    if detail_id is not None:
+        order_detail = OrderDetail.objects.get_queryset().get(id=detail_id, order__owner_id=request.user.id)
+        if order_detail is not None:
+            order_detail.delete()
+            return redirect('eshop_order:user_open_order')
+    raise Http404()
+# todo: fix problem with remove button
+
+# @login_required(login_url='/login')
+# def remove_order_detail(request, *args, **kwargs):
+#     detail_id = kwargs.get('detail_id')
+#     if detail_id is not None:
+#         order_detail = OrderDetail.objects.get_queryset().get(id=detail_id, order__owner_id=request.user.id)
+#         if order_detail is not None:
+#             order_detail.delete()
+#             return redirect('eshop_order:user_open_order')
+#     raise Http404()
 
 
 MERCHANT = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
