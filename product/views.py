@@ -46,6 +46,8 @@ def product_detail_view(request, **kwargs):
         product = Product.objects.get(active=True, id=pk)
     except Product.DoesNotExist:
         return render(request, 'partials/404.html')
+    product.visit_count += 1
+    product.save()
     related_products = Product.objects.filter(categories__product=product).distinct()
     grouped_related_products = my_grouper(3, related_products)
     return render(request, 'product/product_detail.html', {'product': product, 'grouped_galleries': grouped_galleries,

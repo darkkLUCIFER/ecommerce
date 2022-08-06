@@ -17,6 +17,7 @@ class Product(models.Model):
     image = models.ImageField(null=True, blank=True, upload_to='products/', verbose_name='تصویر')
     active = models.BooleanField(default=False, verbose_name='فعال')
     categories = models.ManyToManyField(ProductCategory, blank=True, verbose_name='دسته بندی ها')
+    visit_count = models.IntegerField(default=0, verbose_name='تعداد بازدید')
 
     objects = ProductManager()
 
