@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
@@ -54,3 +55,26 @@ def logout_view(request):
     logout(request)
     messages.success(request, 'با موفقیت خارج شدید', extra_tags='success')
     return redirect('ecommerce:home_page')
+
+
+@login_required(login_url='/login')
+def user_profile(request):
+    user_full = request.user
+    context = {
+        'user_full': user_full
+    }
+    return render(request, 'account/user_profile.html', context)
+
+
+@login_required(login_url='/login')
+def edit_user_profile(request):
+    user_id = request.user.id
+    context = {
+
+    }
+    return render(request, 'account/edit_user_profile.html', context)
+
+
+def user_profile_sidebar(request):
+    context = {}
+    return render(request, 'account/user_profile_sidebar.html', context)

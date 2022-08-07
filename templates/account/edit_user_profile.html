@@ -1,0 +1,12 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load render_partial %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="com-md-8"></div>
+            {% render_partial 'account.views.user_profile_sidebar' %}
+            <div class="com-md-4">this is test</div>
+        </div>
+    </div>
+{% endblock %}
+
