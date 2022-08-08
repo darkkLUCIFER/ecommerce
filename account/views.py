@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, EditUserForm
 from django.contrib.auth.models import User
 
 
@@ -69,10 +70,18 @@ def user_profile(request):
 @login_required(login_url='/login')
 def edit_user_profile(request):
     user_id = request.user.id
-    context = {
-
-    }
-    return render(request, 'account/edit_user_profile.html', context)
+    user = User.objects.get(id=user_id)
+    if user:
+        form = EditUserForm(data=request.POST or None,
+                            initial={'first_name': user.first_name, 'last_name': user.last_name})
+        if form.is_valid():
+            cd = form.cleaned_data
+            first_name = cd['first_name']
+            last_name = cd['last_name']
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+        return render(request, 'account/edit_user_profile.html', {'form': form})
 
 
 def user_profile_sidebar(request):

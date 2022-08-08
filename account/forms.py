@@ -49,3 +49,8 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError('تعداد کارکتر های ایمیل بیش از حد میباشد.')
 
         return emai_address
+
+
+class EditUserForm(forms.Form):
+    first_name = forms.CharField(widget=forms.TextInput, label='نام')
+    last_name = forms.CharField(widget=forms.TextInput, label='نام خانوادگی')
