@@ -59,17 +59,6 @@ def remove_order_detail(request, *args, **kwargs):
             order_detail.delete()
             return redirect('eshop_order:user_open_order')
     raise Http404()
-# todo: fix problem with remove button
-
-# @login_required(login_url='/login')
-# def remove_order_detail(request, *args, **kwargs):
-#     detail_id = kwargs.get('detail_id')
-#     if detail_id is not None:
-#         order_detail = OrderDetail.objects.get_queryset().get(id=detail_id, order__owner_id=request.user.id)
-#         if order_detail is not None:
-#             order_detail.delete()
-#             return redirect('eshop_order:user_open_order')
-#     raise Http404()
 
 
 MERCHANT = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'

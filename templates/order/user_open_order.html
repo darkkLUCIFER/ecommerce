@@ -45,12 +45,10 @@
                                     <p class="cart_total_price">{{ product.get_detail_sum }} تومان</p>
                                 </td>
                                 <td class="cart_delete">
-                                    <a class="cart_quantity_delete" href="{% url 'eshop_order:remove_order_detail' order.id %}"><i class="fa fa-times"></i></a>
+                                    <a class="cart_quantity_delete" href="{% url 'eshop_order:remove_order_detail' product.id %}"><i class="fa fa-times"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
-
-
                         </tbody>
                     </table>
                 </div>
